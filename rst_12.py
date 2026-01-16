@@ -15,75 +15,103 @@ def splash_scene():
     ugame.audio.mute(False)
     # play coin sound
     ugame.audio.play(coin_sound)
-    # image banks for circuitpython
+    # image banks for circuit python
     image_bank_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
+
     background = stage.Grid(
-        image_bank_mt_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
     background = stage.Grid(
-        image_bank_mt_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
     # used this program to split the image into tile:
 
-    #   https://ezgif.com/sprite-cutter/ezgif-5-818cdbcc3f66.png
+
+
 
     background.tile(2, 2, 0)  # blank white
 
+
     background.tile(3, 2, 1)
+
 
     background.tile(4, 2, 2)
 
+
     background.tile(5, 2, 3)
+
 
     background.tile(6, 2, 4)
 
+
     background.tile(7, 2, 0)  # blank white
+
 
     background.tile(2, 3, 0)  # blank white
 
+
     background.tile(3, 3, 5)
+
 
     background.tile(4, 3, 6)
 
+
     background.tile(5, 3, 7)
+
 
     background.tile(6, 3, 8)
 
+
     background.tile(7, 3, 0)  # blank white
+
 
     background.tile(2, 4, 0)  # blank white
 
+
     background.tile(3, 4, 9)
+
 
     background.tile(4, 4, 10)
 
+
     background.tile(5, 4, 11)
+
 
     background.tile(6, 4, 12)
 
+
     background.tile(7, 4, 0)  # blank white
+
 
     background.tile(2, 5, 0)  # blank white
 
+
     background.tile(3, 5, 0)
+
 
     background.tile(4, 5, 13)
 
+
     background.tile(5, 5, 14)
 
+
     background.tile(6, 5, 0)
+
 
     background.tile(7, 5, 0)  # blank white
     # create a stage for the game
     game = stage.Stage(ugame.display, 60)
 
+
     # set the layers of all sprites
     # Because Text is already a list we do not need to place then inside brakests
     game.layers = [background]
 
+
     # renders the sprites
     game.render_block()
+
 
     # repeats game forever
     # repeat forever (game loop)
@@ -94,21 +122,24 @@ def splash_scene():
         menu_scene()
 
 
+
+
 def menu_scene():
     # this function is for the main game game_scene
     # image banks for circuitpython
     image_bank_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
     # sets the background to image 0 in the bank
     background = stage.Grid(
-        image_bank_mt_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
     background = stage.Grid(
-        image_bank_mt_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
     # Add text objects
     # This section of the code tell is what colour it want the text
     # come out in and the font style and adds it to a list ans gives it is's location.
     text = []
+
 
     text1 = stage.Text(
         width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
@@ -117,6 +148,7 @@ def menu_scene():
     text1.text("MT Game Studios")
     text.append(text1)
 
+
     text2 = stage.Text(
         width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
     )
@@ -124,18 +156,22 @@ def menu_scene():
     text2.text("PRESS START")
     text.append(text2)
 
+
     background = stage.Grid(
         image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
     # create a stage for the game
     game = stage.Stage(ugame.display, 60)
 
+
     # set the layers of all sprites
     # Because Text is already a list we do not need to place then inside brakests
     game.layers = text + [background]
 
+
     # renders the sprites
     game.render_block()
+
 
     # repeats game forever
     while True:
@@ -145,15 +181,18 @@ def menu_scene():
         game.tick()
 
 
+
+
 def game_scene():
     # this function is for the main game game_scene
     score = 0
-    # Create and update the score text
-    score_text = stage.Text(width=29, height=14)  # create text object
-    score_text.clear()  # clear any previous text
-    score_text.cursor(0, 0)  # set cursor position
-    score_text.move(1, 1)  # move text to top-left of screen
-    score_text.text("Score: {0}".format(score))  # display current score
+
+    score_text = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    score_text.move(1, 1)
+    score_text.text("Score: {0}".format(score))
+
 
     def show_alien():
         """
@@ -171,20 +210,26 @@ def game_scene():
                 )
                 break
 
-    # image banks for circuitpython
+
+    # image banks for circuit python
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
+
 
     a_button = constants.button_state["button_up"]
     b_button = constants.button_state["button_up"]
     start_button = constants.button_state["button_up"]
     select_button = constants.button_state["button_up"]
 
+
     pew_sound = open("pew.wav", "rb")
+    boom_sound = open("boom.wav", "rb")
+
 
     sound = ugame.audio
     sound.stop()
     sound.mute(False)
+
 
     # sets the background to image 0 in the bank
     background = stage.Grid(
@@ -200,28 +245,16 @@ def game_scene():
     )
     aliens = []
     # Create each laser and place it off-screen initially
-    for alien_number in range(constants.TOTAL_NUMBER_OF_alien):
+    for alien_number in range(constants.TOTAL_NUMBER_OF_ALIENS):
         a_single_alien = stage.Sprite(
             image_bank_sprites,
-            10,  # tile number of the laser in the sprite sheet
+            9,  # tile number of the laser in the sprite sheet
             constants.OFF_SCREEN_X,  # start off-screen
             constants.OFF_SCREEN_Y,
         )
-        alien.append(a_single_alien)
-    # place one alien on the screen
-    # Show a new alien
-    show_alien()
-    # Update the score
-    score = 1  # example: increase score by 1 (adjust as needed)
-    # Prevent score from going below 0
-    if score < 0:
-        score = 0
-    # Update the score text on screen
-    score_text.clear()  # clear previous text
-    score_text.cursor(0, 0)  # set cursor to top-left
-    score_text.move(1, 1)  # position text on screen
-    score_text.text("Score: {0}".format(score))  # display updated score
-
+        aliens.append(a_single_alien)
+        # place one alien on the screen
+        show_alien()
     # Create a list of lasers for shooting
     lasers = []
     # Create each laser and place it off-screen initially
@@ -233,17 +266,27 @@ def game_scene():
             constants.OFF_SCREEN_Y,
         )
         lasers.append(a_single_laser)
+
+
     # create a stage for the game
-    game = stage.Stage(ugame.display, 60)
+    game = stage.Stage(ugame.display, constants.FPS)
+
+
     # set the layers of all sprites
     game.layers = [score_text] + lasers + [ship] + aliens + [background]
+
+
     # renders the sprites
     game.render_block()
+
+
     # repeats game forever
     while True:
         keys = ugame.buttons.get_pressed()
 
+
         if keys & ugame.K_O != 0:
+
 
             if a_button == constants.button_state["button_up"]:
                 a_button = constants.button_state["button_just_pressed"]
@@ -317,6 +360,14 @@ def game_scene():
                     aliens[alien_number].move(
                         constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
                     )
+                    show_alien()
+                    score -= 1
+                    if score < 0:
+                        score = 0
+                    score_text.clear()
+                    score_text.cursor(0,0)
+                    score_text.move(1, 1)
+                    score_text.text("Score: {0}".format(score))
             # Show a new alien after hiding this one
             show_alien()
             # Each frame, check if any lasers are touching any aliens
@@ -346,21 +397,24 @@ def game_scene():
                             )
                             # Play explosion sound
                             sound.stop()
-                            sound.play(boom_sound)
+                            sound.play(boom_sound) # type: ignore
                             # Show new aliens
                             show_alien()
                             show_alien()  # spawn two new aliens for more challenge
                             score = score + 1
-                            score_text.clear()  # clear previous text
-                            score_text.cursor(0, 0)  # set cursor to top-left
-                            score_text.move(1, 1)  # position text on screen
-                            score_text.text(
-                                "Score: {0}".format(score)
-                            )  # display updated score
+                            score_text.clear()
+                            score_text.cursor(0,0)
+                            score_text.move(1, 1)
+                            score_text.text("Score: {0}".format(score))
+        # redraw Sprites
 
-        game.render_sprites(lasers + [ship] + alien)
+
+        game.render_sprites(lasers + [ship] + aliens)
         game.tick()
 
 
+
+
 if __name__ == "__main__":
+    splash_scene()
     menu_scene()

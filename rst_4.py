@@ -1,35 +1,38 @@
+#!/usr/bin/env python3
+# Created by: Shem
+# Created on: 1/10/2025
+# This is my game
+
 import ugame
 import stage
 
-
 def game_scene():
-    # This function is the game_scene
-    # image banks for circut python
+    # load image banks
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
-    # set the back ground to image 0 in the bank
-    # and size to (10x8 tiles of size 16x16)
+
+    # create background
     background = stage.Grid(image_bank_background, 10, 8)
-    # a sprite that will update every frame.
+
+    # create player ship
     ship = stage.Sprite(image_bank_sprites, 5, 75, 66)
-    # create a stage for the background to show up
-    # and set frame rate to 60fps
+
+    # create stage
     game = stage.Stage(ugame.display, 60)
-    # set the layers , items show up in the order
-    game.layers = [ship] + [background]
-    # Render the back ground and initialis location of sprites
+    game.layers = [ship, background]
     game.render_block()
-    # Repeat forever, game loop
+
+    # game loop
     while True:
         # get user input
         keys = ugame.buttons.get_pressed()
-        if keys & ugame.k_k:
+        if keys & ugame.K_X:
             print("A")
-        if keys & ugame.k_0:
+        if keys & ugame.K_O:
             print("B")
-        if keys & ugame.k_START:
+        if keys & ugame.K_START:
             print("Start")
-        if keys & ugame.k_SELECT:
+        if keys & ugame.K_SELECT:
             print("Select")
         if keys & ugame.K_RIGHT:
             ship.move(ship.x + 1, ship.y)
@@ -39,12 +42,9 @@ def game_scene():
             ship.move(ship.x, ship.y - 1)
         if keys & ugame.K_DOWN:
             ship.move(ship.x, ship.y + 1)
-        # update game logic
-
-        # redraw sprite
+        # update screen
         game.render_sprites([ship])
         game.tick()
-
 
 if __name__ == "__main__":
     game_scene()

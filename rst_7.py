@@ -6,7 +6,7 @@ import constants
 def menu_scene():
     # this function is for the main game game_scene
     # image banks for circuitpython
-    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+    image_bank_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
     # sets the background to image 0 in the bank
 
     # Add text objects
